@@ -1,6 +1,6 @@
 
 /*
- * Copyright 2015-2017 the original author or authors.
+ * Copyright 2015-2018 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -97,11 +97,7 @@ Fela = {
 	},
 	tbar: function(parent4Append, o) {
 		$(parent4Append).append('<div class="table_top clearfix"><div class="btn_group left"></div></div>');
-		var count=0;
-		for(var i in o){
-			count++;
-		}
-		
+		var count=Object.keys(o).length; 
 		var c = 0;
 		for (var i in o) {
 			c++;
@@ -224,28 +220,21 @@ Fela = {
 
 	},
 	generateContainer: function(parent4Append, className, id) {
-
 		$(parent4Append).append("<div class='" + className + "' id=" + id + "></div>");
 		return this;
 	},
 	selectedRows:function(id){
-	 	var arr=new Array();
+	 var arr=new Array();
    	 $("#"+id+" input[id]:checked").each(function(){
    		arr.push($(this).prop("id"));
    	 });
    	 return arr;
 	},
 	toggle: function(c, id) {
-		if (c.checked) {
 			$("#" + id + " input:checkbox").each(function() {
-				$(this).prop("checked", true);
+				$(this).prop("checked", c.checked);
 			});
-
-		} else {
-			$("#" + id + " input:checkbox").each(function() {
-				$(this).prop("checked", false);
-			});
-		}
+		 
 	},
 	gt: function(id) {
 		return this.generateTable(id);
@@ -276,24 +265,16 @@ Fela = {
 		}
 		s += '</table>';
 		$("#" + id).html(s);
-		$("#" + id + " tr:gt(0)").click(
-
-				function(e) {
-            e.stopPropagation();
+		$("#" + id + " tr:gt(0)").click(function(e) {
+                        e.stopPropagation();
 		 	_this.doRowClick($(this).children(":eq(0)").children("input").attr("id"));
- 
-
-				});
+		});
 		if (this.showToolbar) {
-			$("#" + id + " .write").click(
-
-			function() {
+			$("#" + id + " .write").click(function() {
 				_this.doEdit($(this).parent().parent().children(":eq(0)").children("input").attr("id"));
 
 			});
-			$("#" + id + " .delete").click(
-
-			function() {
+			$("#" + id + " .delete").click(function() {
 				_this.doDelete($(this).parent().parent().children(":eq(0)").children("input").attr("id"));
 
 			});
@@ -301,24 +282,19 @@ Fela = {
 		}
 
 		if (this.showCheckbox) {
-
-			$("#" + id + " table tr:first>th:first>:checkbox").click(
-
-			function() {
+			$("#" + id + " table tr:first>th:first>:checkbox").click(function() {
 				_this.toggle(this, id);
-
 			});
 
 		}
 
-
 		$("#" + id + " tr:even").addClass("even");
-
 		$("#" + id + " tr:odd").addClass("odd");
 		$("#" + id + " tr").mouseover(function() {
 			$(this).removeClass("even odd");
 			$(this).toggleClass("d");
 		});
+		
 		$("#" + id + "  .arrow.arrow_up").click(function() {
 
 			for (var i = 0; i < _this.headers.length; i++) {
@@ -327,7 +303,6 @@ Fela = {
 					_this.start = 0;
 					_this.data.start = _this.start;
 					_this.data.limit = _this.limit;
-
 					_this.data.sort = _this.keys[i];
 					_this.data.dir = "ASC";
 
@@ -356,7 +331,6 @@ Fela = {
 					_this.start = 0;
 					_this.data.start = _this.start;
 					_this.data.limit = _this.limit;
-
 					_this.data.sort = _this.keys[i];
 					_this.data.dir = "DESC";
 
